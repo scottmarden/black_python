@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Trip Information</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1> Your travels await, {{ request.session.username }}!</h1>
+				<a href="/">Home</a>
+				<form action="/logout" method="post">
+					{% csrf_token %}
+					<button type="submit">Logout</button>
+				</form>
+				<hr>
+			</div>
+			<div id="content">
+				<div id="trip_details">
+					<h1>{{ trip.destination }}</h1>
+					<h3>Planned by: {{trip.created_by.name}} </h3>
+					<h3>Description: {{ trip.description }}</h3>
+					<h3>Departure Date: {{ trip.departure_date }} </h3>
+					<h3>Return Date: {{ trip.return_date }}</h3>
+				</div>
+				<div id="other_users">
+					<h2>Other users joining the trip:</h2>
+					{% for user in other_users %}
+						<h4>{{ user.name }}</h4>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

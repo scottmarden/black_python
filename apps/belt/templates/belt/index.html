@@ -2,9 +2,64 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Login & Register</title>
+		<title>Login | Register</title>
+		<style>
+			#login{
+				display: inline-block;
+			}
+			#registration{
+				display: inline-block;
+				vertical-align: top;
+			}
+			fieldset {
+				width: 450px;
+			}
+			label{
+				display: inline-block;
+			}
+			.error {
+				color: red;
+			}
+
+		</style>
 	</head>
 	<body>
-		<h1>It works!</h1>
+		<div id="wrapper">
+			<h1>Login | Register</h1>
+			<div id="login">
+			<fieldset>
+				<legend>Login:</legend>
+				<form action="/login" method="post">
+					{% csrf_token %}
+					Username: <input type="text" name="username" />
+					Password: <input type="password" name="password" />
+					<button type="submit">Login!</button>
+				</form>
+			</fieldset>
+			</div>
+			<div id="registration">
+				<fieldset>
+					<legend>Register</legend>
+					<form action="/register" method="post">
+						{% csrf_token %}
+						<label for="name">Name<input type="text" name="name"></label>
+						<label for="username">Username<input type="text" name="username"></label>
+						<label for="password">Password<input type="password" name="password"></label>
+						<p>*Password should be at least 8 characters</p>
+						<label for="pw_confirm">Confirm Password<input type="password" name="pw_confirm"></label>
+						<button type="submit">Register!</button>
+					</form>
+				</fieldset>
+			</div>
+			<div id="errors">
+				{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
 	</body>
 </html>

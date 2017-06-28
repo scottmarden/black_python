@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Travels</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1> Your travels await, {{ request.session.username }}!</h1>
+				<a href="/">Home</a>
+				<form action="/logout" method="post">
+					{% csrf_token %}
+					<button type="submit">Logout</button>
+				</form>
+				<hr>
+			</div>
+			<div id="content">
+				<div id="trip_schedule">
+					<h3>Your trips: </h3>
+					<table cellspacing="15">
+						<tr>
+							<th>Destination</th>
+							<th>Travel Start Date</th>
+							<th>Travel End Date</th>
+							<th>Plan</th>
+						</tr>
+						{% for trip in my_trips %}
+							<tr>
+								<td><a href="travels/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+								<td>{{ trip.departure_date }}</td>
+								<td>{{ trip.return_date }}</td>
+								<td>{{ trip.description }}</td>
+							</tr>
+						{% endfor %}
+					</table>
+					<hr>
+				</div>
+				<div id="other_trips">
+					<h3>Other trips: </h3>
+					<table cellspacing="15">
+						<tr>
+							<th>Destination</th>
+							<th>Travel Start Date</th>
+							<th>Travel End Date</th>
+							<th>Plan</th>
+						</tr>
+						{% for trip in other_trips %}
+							<tr>
+								<td><a href="travels/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+								<td>{{ trip.departure_date }}</td>
+								<td>{{ trip.return_date }}</td>
+								<td>{{ trip.description }}</td>
+								<td>
+									<form action="join_trip" method="post">
+										{% csrf_token %}
+										<input type="hidden" name="trip_id" value="{{ trip.id }}" />
+										<button type="submit">Join Trip!</button>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+					<hr>
+				</div>
+
+
+
+
+			</div>
+			<a href="/travels/add">Add Trip</a>
+		</div>
+
+	</body>
+</html>
