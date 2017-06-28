@@ -45,7 +45,7 @@ def success(request):
 		return redirect('/')
 	context = {
 		'my_trips': Trip.objects.filter(Q(created_by__id=request.session['user_id'])|Q(joined_users__id=request.session['user_id'])).distinct(),
-		'other_trips': Trip.objects.exclude(Q(created_by__id=request.session['user_id'])|Q(joined_users__id=request.session['user_id'])),
+		'other_trips': Trip.objects.exclude(Q(created_by__id=request.session['user_id'])|Q(joined_users__id=request.session['user_id'])).distinct(),
 	}
 	return render(request, 'belt/travels.html', context)
 
