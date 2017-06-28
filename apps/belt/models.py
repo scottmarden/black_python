@@ -16,11 +16,13 @@ class UserManager(models.Manager):
 			if len(data[item]) < 1:
 				errors.append(item.replace("_", " ").title() + " is a required field")
 		if len(data['name']) < 3:
-			errors.append("Name must be at least 2 characters long")
+			errors.append("Name must be at least 3 characters long")
 		if any (x.isalpha() for x in name) and any(x.isspace() for x in name):
 			pass
 		else:
 			errors.append("Name can only contain letters and spaces")
+		if len(data['username']) < 3:
+			errors.append("Username must be at least 3 characters long")
 		try:
 			User.objects.get(username = data['username'])
 			errors.append("That username is already taken")
@@ -39,6 +41,9 @@ class UserManager(models.Manager):
 
 	def login(self, data):
 		errors = []
+		for item in data:
+			if len(data[item]) < 1:
+				errors.append(item.replace("_", " ").title() + " is a required field")
 		try:
 			user = User.objects.get(username = data['username'])
 		except:
