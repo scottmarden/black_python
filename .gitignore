@@ -1,0 +1,4 @@
+*.pyc
+db.aqlite3
+venv/
+.DS_Store
